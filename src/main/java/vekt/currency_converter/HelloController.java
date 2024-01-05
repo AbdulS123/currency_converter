@@ -41,51 +41,87 @@ public class HelloController {
     }
 
     public Double exchangeRateValueExtractor(String exchangeRateValue){
-        String regex = "<div class=\"YMlKec fxKbKc\">([0-9]+\\.[0-9]+)</div>";
+        String regex = "<div class=\"YMlKec fxKbKc\">([0-9]+(?:,)?[0-9]+\\.[0-9]+)</div>";
 
         Matcher matcher = Pattern.compile(regex).matcher(exchangeRateValue);
 
         String extractedNumber = matcher.find() ? matcher.group(1) : "";
 
-        return Double.valueOf(extractedNumber);
+
+        return stringCleaner(extractedNumber);
+
+    }
+
+public Double stringCleaner(String extractedNumber){
+    // Remove the comma from the string
+    String cleanedNumberString = extractedNumber.replace(",", "");
+    // Parse the string into a Double
+    return Double.parseDouble(cleanedNumberString);
+}
+
+
+
+
+
+
+
+    @FXML
+    void btn_convert_click(MouseEvent event) throws IOException {
+        Double currencyRate = exchangeRateGetter((String) cbx_from.getValue(), (String) cbx_to.getValue());
+        lb_total_currency_value.setText(String.format("%,.6f", Double.parseDouble(tf_amount.getText()) * currencyRate));
+
+        lb_total_currency_name.setText((String) cbx_to.getValue());
+        lb_single_from_currency.setText("1 "+(String) cbx_from.getValue()+" =");
+        lb_single_to_currency_name.setText((String) cbx_to.getValue());
+        lb_single_to_currency.setText(String.format("%,.6f", currencyRate));
+
+
+    }
+
+    @FXML
+    void btn_start_quiz_click(MouseEvent event) {
+
+
+
+
     }
 
 
 
-    public static void roter() {
-        System.out.println("Hello, JavaFX Application!");
-
-    }
-
-
-    @FXML
-    private Button btn_test;
-
-    @FXML
-    void btn_test_click(MouseEvent event) {
-        btn_test.setStyle("-fx-background-color: #ff0000; -fx-text-fill: #ffffff;");
-        sdde.setStyle("-fx-background-color: #ff0000; -fx-text-fill: #ffffff;");
-    }
-
-    @FXML
-    void dasdas(MouseEvent event) {
-
-    }
-
-
-    @FXML
-    void BtnSubmitClick(MouseEvent event) throws IOException {
-        System.out.println(exchangeRateGetter("EUR", "USD"));
-        roter();
 
 
 
-    }
-    @FXML
-    private ComboBox<?> A123;
-    @FXML
-    private ComboBox<?> B123;
-    @FXML
-    private TextField sdde;
 
+
+
+        @FXML
+        private Button btn_convert;
+        @FXML
+        private Button btn_start_quiz;
+        @FXML
+        private Label lb_amount;
+        @FXML
+        private Label lb_center_title;
+        @FXML
+        private Label lb_from;
+        @FXML
+        private Label lb_quiz;
+        @FXML
+        private Label lb_single_from_currency;
+        @FXML
+        private Label lb_single_to_currency;
+        @FXML
+        private Label lb_single_to_currency_name;
+        @FXML
+        private Label lb_to;
+        @FXML
+        private Label lb_total_currency_name;
+        @FXML
+        private Label lb_total_currency_value;
+        @FXML
+        private TextField tf_amount;
+        @FXML
+        private ComboBox<?> cbx_from;
+        @FXML
+        private ComboBox<?> cbx_to;
 }
