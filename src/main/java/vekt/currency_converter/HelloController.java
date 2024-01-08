@@ -9,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -70,12 +69,11 @@ public class HelloController {
             return;
         }
         Double currencyRate = exchangeRateGetter((String) cbx_from.getValue(), (String) cbx_to.getValue());
-        lb_total_currency_value.setText(String.format("%,.6f", Double.parseDouble(tf_amount.getText()) * currencyRate));
+        String total_currency_value = String.format("%,.6f", Double.parseDouble(tf_amount.getText()) * currencyRate);
+        lb_total_currency.setText(total_currency_value + " " + (String) cbx_to.getValue());
 
-        lb_total_currency_name.setText((String) cbx_to.getValue());
-        lb_single_from_currency.setText("1 "+(String) cbx_from.getValue()+" =");
-        lb_single_to_currency_name.setText((String) cbx_to.getValue());
-        lb_single_to_currency.setText(String.format("%,.6f", currencyRate));
+
+        lb_single_currency.setText("1 "+(String) cbx_from.getValue()+" ="+String.format("%,.6f", currencyRate+ (String) cbx_to.getValue()));
     }
 
 
@@ -95,6 +93,7 @@ public class HelloController {
     }
 
     public void nextQuestion() {
+        reset_answer_btn_color();
         if(questionNumber == numberofquestion){
             grid_questions.setVisible(false);
             grid_questions_result.setVisible(true);
@@ -103,7 +102,8 @@ public class HelloController {
         pb_quiz.setProgress((double)(1/numberofquestion)*questionNumber);
         reset_answer_btn_color();
         questionChecker();
-        _quiz.setText(questions.get(questionNumber++));
+        lb_quiz_question_text.setText(questions.get(questionNumber++));
+        lb_quiz_question_text.setText(String.valueOf(questionNumber));
     }
     public void questionChecker() {
         if(btn_first_answer.getStyle().contains("#29bc1e")){
@@ -175,7 +175,7 @@ public class HelloController {
 
 
     @FXML
-    private Label _quiz;
+    private Label lb_quiz_question_text;
     @FXML
     private GridPane grid_questions;
     @FXML
@@ -198,7 +198,8 @@ public class HelloController {
 
 
 
-
+    @FXML
+    private GridPane grid_underground;
 
 
 
@@ -216,17 +217,11 @@ public class HelloController {
         @FXML
         private Label lb_quiz;
         @FXML
-        private Label lb_single_from_currency;
-        @FXML
-        private Label lb_single_to_currency;
-        @FXML
-        private Label lb_single_to_currency_name;
+        private Label lb_single_currency;
         @FXML
         private Label lb_to;
         @FXML
-        private Label lb_total_currency_name;
-        @FXML
-        private Label lb_total_currency_value;
+        private Label lb_total_currency;
         @FXML
         private TextField tf_amount;
         @FXML
@@ -234,107 +229,4 @@ public class HelloController {
         @FXML
         private ComboBox<?> cbx_to;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        @FXML
-        private GridPane grid_underground;
 }

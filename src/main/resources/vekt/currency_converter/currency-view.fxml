@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -22,7 +25,7 @@
       <RowConstraints maxHeight="153.0" minHeight="10.0" prefHeight="152.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-      <GridPane fx:id="grid_main_page" prefHeight="600.0" prefWidth="800.0" GridPane.columnSpan="2" GridPane.rowSpan="4">
+      <GridPane fx:id="grid_main_page" prefHeight="600.0" prefWidth="800.0" visible="false" GridPane.columnSpan="2" GridPane.rowSpan="4">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="440.0" minWidth="10.0" prefWidth="401.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="448.0" minWidth="10.0" prefWidth="399.0" />
@@ -54,7 +57,7 @@
                     <RowConstraints maxHeight="149.0" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
                   </rowConstraints>
                   <children>
-                    <Label text="CURRENCY CONVERTER" textFill="WHITE" GridPane.rowIndex="1">
+                    <Label fx:id="lb_center_title" text="CURRENCY CONVERTER" textFill="WHITE" GridPane.rowIndex="1">
                       <font>
                         <Font name="System Bold" size="35.0" />
                       </font>
@@ -105,22 +108,40 @@
                     <DropShadow />
                   </effect>
                   <children>
-                    <Label text="AMOUNT" GridPane.columnIndex="1">
+                    <Label fx:id="lb_amount" text="AMOUNT" GridPane.columnIndex="1">
                       <font>
                         <Font name="System Bold" size="13.0" />
                       </font>
                     </Label>
-                    <Label text="FROM" GridPane.columnIndex="2" />
-                    <Label text="TO" GridPane.columnIndex="3" />
-                    <TextField maxHeight="40.0" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                    <ComboBox maxHeight="40.0" maxWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                    <ComboBox maxHeight="40.0" maxWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                    <Label text="0.935794 EUROS" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <Label fx:id="lb_from" text="FROM" GridPane.columnIndex="2" />
+                    <Label fx:id="lb_to" text="TO" GridPane.columnIndex="3" />
+                    <TextField fx:id="tf_amount" maxHeight="40.0" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <ComboBox fx:id="cbx_from" maxHeight="40.0" maxWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="EUR" />
+                          <String fx:value="USD" />
+                          <String fx:value="BTC" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+
+                    <ComboBox fx:id="cbx_to" maxHeight="40.0" maxWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="EUR" />
+                          <String fx:value="USD" />
+                          <String fx:value="BTC" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+
+                    <Label fx:id="lb_total_currency" text="0.935794 EUROS" GridPane.columnIndex="1" GridPane.rowIndex="3">
                       <font>
                         <Font size="16.0" />
                       </font>
                     </Label>
-                    <Label text="1 USD = 1.3247 EUR" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <Label fx:id="lb_single_currency" text="1 USD = 1.3247 EUR" GridPane.columnIndex="1" GridPane.rowIndex="4">
                       <font>
                         <Font size="12.0" />
                       </font>
@@ -134,7 +155,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       </rowConstraints>
                       <children>
-                        <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="CONVERT" GridPane.columnIndex="1" />
+                        <Button fx:id="btn_convert" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#btn_convert_click" text="CONVERT" GridPane.columnIndex="1" />
                       </children>
                     </GridPane>
                   </children>
@@ -151,8 +172,8 @@
                 <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="56.0" valignment="TOP" vgrow="SOMETIMES" />
               </rowConstraints>
               <children>
-                <Label text="Quiz?" />
-                <Button mnemonicParsing="false" text="START QUIZ" GridPane.rowIndex="1" />
+                <Label fx:id="lb_quiz" text="Quiz?" />
+                <Button fx:id="btn_start_quiz" mnemonicParsing="false" onMouseClicked="#btn_start_quiz_click" text="START QUIZ" GridPane.rowIndex="1" />
               </children>
             </GridPane>
          </children>
@@ -221,7 +242,7 @@
               <RowConstraints maxHeight="404.0" minHeight="10.0" prefHeight="399.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-              <GridPane fx:id="grid_questions_result" prefHeight="318.0" prefWidth="534.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+              <GridPane fx:id="grid_questions_result" prefHeight="318.0" prefWidth="534.0" style="-fx-background-color: #00d9ff; -fx-background-radius: 30;" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
                 <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="528.0" minWidth="0.0" prefWidth="263.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="528.0" minWidth="10.0" prefWidth="271.0" />
@@ -238,7 +259,7 @@
                   <DropShadow />
                 </effect>
               </GridPane>
-              <GridPane prefHeight="318.0" prefWidth="534.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+              <GridPane fx:id="grid_questions" prefHeight="318.0" prefWidth="534.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
                 <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="0.0" />
                 </columnConstraints>
@@ -256,7 +277,7 @@
                   <DropShadow />
                 </effect>
                 <children>
-                  <Button maxHeight="45.0" maxWidth="350.0" mnemonicParsing="false" style="-fx-background-radius: 30; -fx-background-color: #FFFFFF;" text="AGREE" textFill="#030303" GridPane.rowIndex="3">
+                  <Button fx:id="btn_second_answer" maxHeight="45.0" maxWidth="350.0" mnemonicParsing="false" onMouseClicked="#btn_second_answer_click" style="-fx-background-radius: 30; -fx-background-color: #FFFFFF;" text="AGREE" textFill="#030303" GridPane.rowIndex="3">
                     <font>
                       <Font name="System Bold" size="16.0" />
                     </font>
@@ -264,7 +285,7 @@
                       <DropShadow />
                     </effect>
                   </Button>
-                  <Button maxHeight="45.0" maxWidth="350.0" mnemonicParsing="false" style="-fx-background-radius: 30; -fx-background-color: #FFFFFF;" text="STRONGLY AGREE" GridPane.rowIndex="2">
+                  <Button fx:id="btn_first_answer" maxHeight="45.0" maxWidth="350.0" mnemonicParsing="false" onMouseClicked="#btn_first_answer_click" style="-fx-background-radius: 30; -fx-background-color: #FFFFFF;" text="STRONGLY AGREE" GridPane.rowIndex="2">
                     <font>
                       <Font name="System Bold" size="16.0" />
                     </font>
@@ -272,7 +293,7 @@
                       <DropShadow />
                     </effect>
                   </Button>
-                  <Button maxHeight="45.0" maxWidth="350.0" mnemonicParsing="false" style="-fx-background-radius: 30; -fx-background-color: #FFFFFF;" text="DISAGREE" GridPane.rowIndex="4">
+                  <Button fx:id="btn_third_answer" maxHeight="45.0" maxWidth="350.0" mnemonicParsing="false" onMouseClicked="#btn_third_answer_click" style="-fx-background-radius: 30; -fx-background-color: #FFFFFF;" text="DISAGREE" GridPane.rowIndex="4">
                     <font>
                       <Font name="System Bold" size="16.0" />
                     </font>
@@ -280,7 +301,7 @@
                       <DropShadow />
                     </effect>
                   </Button>
-                  <Button maxHeight="45.0" maxWidth="350.0" mnemonicParsing="false" style="-fx-background-radius: 30; -fx-background-color: #FFFFFF;" text="STRONGLY DISAGREE" GridPane.rowIndex="5">
+                  <Button fx:id="btn_fourth_answer" maxHeight="45.0" maxWidth="350.0" mnemonicParsing="false" onMouseClicked="#btn_fourth_answer_click" style="-fx-background-radius: 30; -fx-background-color: #FFFFFF;" text="STRONGLY DISAGREE" GridPane.rowIndex="5">
                     <font>
                       <Font name="System Bold" size="16.0" />
                     </font>
@@ -288,12 +309,13 @@
                       <DropShadow />
                     </effect>
                   </Button>
-                  <Label text="Question">
+                  <Label fx:id="lb_quiz_question_text" text="Question">
                     <font>
                       <Font size="16.0" />
                     </font>
                   </Label>
-                  <Button maxHeight="40.0" maxWidth="150.0" mnemonicParsing="false" style="-fx-background-color: #140d57; -fx-background-radius: 30;" text="NEXT QUESTION" textFill="WHITE" GridPane.rowIndex="6" />
+                  <Button maxHeight="40.0" maxWidth="150.0" mnemonicParsing="false" onMouseClicked="#nextQuestion" style="-fx-background-color: #140d57; -fx-background-radius: 30;" text="NEXT QUESTION" textFill="WHITE" GridPane.rowIndex="6" />
+                        <ProgressBar fx:id="pb_quiz" prefWidth="200.0" progress="0.0" />
                 </children>
               </GridPane>
             </children>
