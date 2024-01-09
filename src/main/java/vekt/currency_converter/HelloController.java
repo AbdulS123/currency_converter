@@ -20,9 +20,22 @@ public class HelloController {
     private int pointForDollar = 0;
     private int pointForBitcoin = 0;
     private int pointForDogecoin = 0;
-    private final List<String> questions = List.of("Which currency is the most valuable?", "Which currency is the least valuable?", "Which currency is the most popular?", "Which currency is the least popular?");
-    private int questionNumber = -1;
-    private final int numberofquestion = 7;
+
+    private final List<String> questions = List.of(
+            "1. I am a very organized person.",
+            "In unexpected problems I immediately look for solutions.",
+            "I often spend my free time with friends or outdoors in nature.",
+            "I adapt quickly to changes in my life.",
+            "I accept my mistakes and see them as learning opportunities.",
+            "I am interested in finances.",
+            "I love traveling and discovering different cultures.",
+            "I set aside a certain amount of money monthly.");
+    private int currentQuestionNumber = 1;
+
+    @FXML
+    public void initialize() {
+        lb_quiz_question_text.setText(questions.get(0));
+    }
 
 
 
@@ -94,17 +107,19 @@ public class HelloController {
 
     public void nextQuestion() {
         reset_answer_btn_color();
-        if(questionNumber == numberofquestion){
+        if(currentQuestionNumber == questions.size()){
             grid_questions.setVisible(false);
             grid_questions_result.setVisible(true);
             return;
         }
-        pb_quiz.setProgress((double)(1/numberofquestion)*questionNumber);
+        pb_quiz.setProgress((double)(1/questions.size())* currentQuestionNumber);
         reset_answer_btn_color();
         questionChecker();
-        lb_quiz_question_text.setText(questions.get(questionNumber++));
-        lb_quiz_question_text.setText(String.valueOf(questionNumber));
+        String currentQuestion = questions.get(currentQuestionNumber++);
+        lb_quiz_question_text.setText(currentQuestion);
+        lb_quiz_question_text.setText(String.valueOf(currentQuestionNumber) + ". " + currentQuestion);
     }
+
     public void questionChecker() {
         if(btn_first_answer.getStyle().contains("#29bc1e")){
             pointForEuro++;
@@ -161,7 +176,7 @@ public class HelloController {
         pointForDollar = 0;
         pointForBitcoin = 0;
         pointForDogecoin = 0;
-        questionNumber = -1;
+        currentQuestionNumber = 1;
         reset_answer_btn_color();
     }
     public void goBackMainPage() {
