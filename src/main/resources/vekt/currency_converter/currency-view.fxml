@@ -585,7 +585,7 @@
                   <RowConstraints maxHeight="225.0" minHeight="10.0" prefHeight="215.0" vgrow="SOMETIMES" />
                 </rowConstraints>
                 <children>
-                  <Label text="FINANZCHECK" textFill="WHITE" GridPane.rowIndex="1">
+                  <Label text="FINANCIAL ADVICE" textFill="WHITE" GridPane.rowIndex="1">
                     <font>
                       <Font name="System Bold" size="35.0" />
                     </font>
@@ -617,7 +617,7 @@
               <RowConstraints maxHeight="404.0" minHeight="10.0" prefHeight="399.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-              <GridPane fx:id="grid_questions_result" prefHeight="318.0" prefWidth="534.0" style="-fx-background-color: #00d9ff; -fx-background-radius: 30;" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+              <GridPane fx:id="grid_questions_result" prefHeight="318.0" prefWidth="534.0" style="-fx-background-color: #00d9ff; -fx-background-radius: 30;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
                 <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="528.0" minWidth="0.0" prefWidth="263.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="528.0" minWidth="10.0" prefWidth="271.0" />
@@ -690,7 +690,7 @@
                     </font>
                   </Label>
                   <Button maxHeight="40.0" maxWidth="150.0" mnemonicParsing="false" onMouseClicked="#nextQuestion" style="-fx-background-color: #140d57; -fx-background-radius: 30;" text="NEXT QUESTION" textFill="WHITE" GridPane.rowIndex="6" />
-                        <ProgressBar fx:id="pb_quiz" prefWidth="200.0" progress="0.0" />
+                        <ProgressBar fx:id="pb_quiz" prefWidth="200.0" progress="0.0" visible="false" />
                 </children>
               </GridPane>
             </children>
