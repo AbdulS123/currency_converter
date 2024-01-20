@@ -2,9 +2,9 @@ package vekt.currency_converter;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -31,6 +31,9 @@ public class HelloController {
             "I love traveling and discovering different cultures.",
             "I set aside a certain amount of money monthly.");
     private int currentQuestionNumber = 1;
+
+    @FXML
+    private ProgressBar progressBar;
 
     @FXML
     public void initialize() {
@@ -89,13 +92,6 @@ public class HelloController {
         lb_single_currency.setText("1 "+(String) cbx_from.getValue()+" ="+String.format("%,.6f", currencyRate+ (String) cbx_to.getValue()));
     }
 
-
-
-
-
-
-
-
     @FXML
     void btn_start_quiz_click(MouseEvent event) {
         grid_main_page.setVisible(false);
@@ -120,14 +116,15 @@ public class HelloController {
         lb_quiz_question_text.setText(String.valueOf(currentQuestionNumber) + ". " + currentQuestion);
     }
 
+
     public void questionChecker() {
-        if(btn_first_answer.getStyle().contains("#29bc1e")){
+        if(btn_first_answer.getStyle().contains("#000924")){
             pointForEuro++;
-        } else if (btn_second_answer.getStyle().contains("#29bc1e")){
+        } else if (btn_second_answer.getStyle().contains("#000924")){
             pointForDollar++;
-        } else if (btn_third_answer.getStyle().contains("#29bc1e")){
+        } else if (btn_third_answer.getStyle().contains("#000924")){
             pointForBitcoin++;
-        } else if (btn_fourth_answer.getStyle().contains("#29bc1e")){
+        } else if (btn_fourth_answer.getStyle().contains("#000924")){
             pointForDogecoin++;
         }
     }
@@ -136,15 +133,15 @@ public class HelloController {
     void btn_second_answer_click(MouseEvent event) {
         if(btn_second_answer.getStyle().contains("#e9e9e9")){
             reset_answer_btn_color();
-            btn_second_answer.setStyle("-fx-background-color: #29bc1e; -fx-text-fill: #fff; -fx-font-bold: true; -fx-font-size: 16px; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #29bc1e; -fx-border-width: 2px;");
+            btn_second_answer.setStyle("-fx-background-color: #000924; -fx-text-fill: #fff; -fx-font-bold: true; -fx-font-size: 16px; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #000924; -fx-border-width: 2px;");
         }
         else{ reset_answer_btn_color();}
     }
     @FXML
-    void btn_third_answer_click(MouseEvent event) {
+    void btn_third_answer_click(MouseEvent event) throws  IOException {
         if(btn_third_answer.getStyle().contains("#e9e9e9")){
             reset_answer_btn_color();
-            btn_third_answer.setStyle("-fx-background-color: #29bc1e; -fx-text-fill: #fff; -fx-font-bold: true; -fx-font-size: 16px; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #29bc1e; -fx-border-width: 2px;");
+            btn_third_answer.setStyle("-fx-background-color: #000924; -fx-text-fill: #fff; -fx-font-bold: true; -fx-font-size: 16px; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #000924; -fx-border-width: 2px;");
         }
         else{ reset_answer_btn_color();}
     }
@@ -152,7 +149,7 @@ public class HelloController {
     void btn_fourth_answer_click(MouseEvent event) {
         if(btn_fourth_answer.getStyle().contains("#e9e9e9")){
             reset_answer_btn_color();
-            btn_fourth_answer.setStyle("-fx-background-color: #29bc1e; -fx-text-fill: #fff; -fx-font-bold: true; -fx-font-size: 16px; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #29bc1e; -fx-border-width: 2px;");
+            btn_fourth_answer.setStyle("-fx-background-color: #000924; -fx-text-fill: #fff; -fx-font-bold: true; -fx-font-size: 16px; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #000924; -fx-border-width: 2px;");
         }
         else{ reset_answer_btn_color();}
     }
@@ -160,7 +157,7 @@ public class HelloController {
     void btn_first_answer_click(MouseEvent event) {
         if(btn_first_answer.getStyle().contains("#e9e9e9")){
             reset_answer_btn_color();
-            btn_first_answer.setStyle("-fx-background-color: #29bc1e; -fx-text-fill: #fff; -fx-font-bold: true; -fx-font-size: 16px; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #29bc1e; -fx-border-width: 2px;");
+            btn_first_answer.setStyle("-fx-background-color: #000924; -fx-text-fill: #fff; -fx-font-bold: true; -fx-font-size: 16px; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #000924; -fx-border-width: 2px;");
         }
         else{ reset_answer_btn_color();}
     }
@@ -184,6 +181,44 @@ public class HelloController {
         grid_questions_page.setVisible(false);
     }
 
+    public void lightMode() {
+        grid_upper_background.setStyle("-fx-background-color: #9e9e9e");
+        grid_under_background.setStyle("-fx-background-color: #9e9e9e");
+        lb_quiz.setStyle("-fx-text-fill: #FFFFFF");
+        btn_start_quiz.setStyle("-fx-background-color: #FFFFFF");
+        lb_quiz.setStyle("-fx-text-fill: #000000");
+        btn_convert.setStyle("-fx-background-color: #9e9e9e; -fx-text-fill: #000000");
+        btn_dark_mode.setVisible(true);
+        btn_light_mode.setVisible(false);
+
+        //Second page
+        grid2_upper_background.setStyle("-fx-background-color: #9e9e9e");
+        grid2_under_background.setStyle("-fx-background-color: #9e9e9e");
+        btn_next_question.setStyle("-fx-background-color: #9e9e9e; -fx-text-fill: #000000; -fx-background-radius: 30");
+        lb_go_home.setStyle("-fx-text-fill: #000000");
+        btn_dark_mode2.setVisible(true);
+        btn_light_mode2.setVisible(false);
+    }
+
+    public void darkMode() {
+        grid_upper_background.setStyle("-fx-background-color: #000924");
+        grid_under_background.setStyle("-fx-background-color: #000924");
+        lb_quiz.setStyle("-fx-text-fill: #FFFFFF");
+        btn_convert.setStyle("-fx-background-color: #000924; -fx-text-fill: #FFFFFF");
+        btn_start_quiz.setStyle("-fx-background-color: #FFFFFF");
+        btn_dark_mode.setVisible(false);
+        btn_light_mode.setVisible(true);
+
+        //Second page
+        grid2_upper_background.setStyle("-fx-background-color: #000924");
+        grid2_under_background.setStyle("-fx-background-color: #000924");
+        btn_next_question.setStyle("-fx-background-color: #000924");
+        lb_go_home.setStyle("-fx-text-fill: #FFFFFF");
+        btn_dark_mode2.setVisible(false);
+        btn_light_mode2.setVisible(true);
+
+
+    }
 
 
 
@@ -209,6 +244,29 @@ public class HelloController {
     private Button btn_fourth_answer;
     @FXML
     private ProgressBar pb_quiz;
+    @FXML
+    private GridPane grid_loading;
+    @FXML
+    private GridPane grid_upper_background;
+    @FXML
+    private GridPane grid_under_background;
+    @FXML
+    private Button btn_light_mode;
+    @FXML
+    private Button btn_light_mode2;
+    @FXML
+    private Button btn_dark_mode;
+    @FXML
+    private Button btn_dark_mode2;
+    @FXML
+    private Label lb_go_home;
+    @FXML
+    private GridPane grid2_upper_background;
+    @FXML
+    private GridPane grid2_under_background;
+    @FXML
+    private Button btn_next_question;
+
 
 
 
