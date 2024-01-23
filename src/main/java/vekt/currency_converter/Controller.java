@@ -16,7 +16,10 @@ import java.util.regex.Pattern;
 public class Controller {
 
     private int totalPoints;
+    private int currentQuestionNumber;
 
+
+    //list of the questions
     private final List<String> questions = List.of(
             "I am a very organized person.",
             "In unexpected problems I immediately look for solutions.",
@@ -26,7 +29,6 @@ public class Controller {
             "I am interested in finances.",
             "I love traveling and discovering different cultures.",
             "I set aside a certain amount of money monthly.");
-    private int currentQuestionNumber;
 
     @FXML
     public void initialize() {
@@ -74,10 +76,12 @@ public class Controller {
     }
     @FXML
     void btn_convert_click(MouseEvent event) throws IOException {
+        //if the amount field is empty return
         if(tf_amount.getText().isEmpty()){
             return;
         }
 
+        //displays the total conversion amount
         Double currencyRate = exchangeRateGetter((String) cbx_from.getValue(), (String) cbx_to.getValue());
         String total_currency_value = String.format("%,.6f", Double.parseDouble(tf_amount.getText()) * currencyRate);
         lb_total_currency.setText(total_currency_value + " " + (String) cbx_to.getValue());
@@ -106,7 +110,16 @@ public class Controller {
             return;
         }
         //Progressbar
-        double progress = (double) currentQuestionNumber / questions.size();
+        double progress = 0;
+        if(progress == 0){
+            progress = (double) (currentQuestionNumber+1) / questions.size();
+            
+        }
+        else{
+             progress = (double) currentQuestionNumber / questions.size();
+
+        }
+        
         pb_quiz.setProgress(progress);
 
 
