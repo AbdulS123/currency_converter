@@ -2,7 +2,6 @@ package vekt.currency_converter;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import java.io.BufferedReader;
@@ -16,10 +15,11 @@ import java.util.regex.Pattern;
 
 public class HelloController {
 
-    private int pointForEuro = 0;
-    private int pointForDollar = 0;
-    private int pointForBitcoin = 0;
-    private int pointForDogecoin = 0;
+    private int pointForBitcoin;
+    private int pointForEthereum;
+    private int pointForCardano;
+    private int pointForLitecoin;
+    private int totalPoints;
 
     private final List<String> questions = List.of(
             "1. I am a very organized person.",
@@ -30,16 +30,13 @@ public class HelloController {
             "I am interested in finances.",
             "I love traveling and discovering different cultures.",
             "I set aside a certain amount of money monthly.");
-    private int currentQuestionNumber = 1;
-
-    @FXML
-    private ProgressBar progressBar;
+    private int currentQuestionNumber;
 
     @FXML
     public void initialize() {
+        pb_quiz.setProgress(0);
         lb_quiz_question_text.setText(questions.get(0));
     }
-
 
 
     public Double exchangeRateGetter(String currencyFrom, String currencyTo) throws IOException {
@@ -48,6 +45,7 @@ public class HelloController {
 
         // Open a connection to the URL
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
 
         // Set request method to GET
         connection.setRequestMethod("GET");
@@ -71,7 +69,6 @@ public class HelloController {
 
         String extractedNumber = matcher.find() ? matcher.group(1) : "";
 
-
         return stringCleaner(extractedNumber);
 
     }
@@ -84,31 +81,46 @@ public class HelloController {
         if(tf_amount.getText().isEmpty()){
             return;
         }
+
         Double currencyRate = exchangeRateGetter((String) cbx_from.getValue(), (String) cbx_to.getValue());
         String total_currency_value = String.format("%,.6f", Double.parseDouble(tf_amount.getText()) * currencyRate);
         lb_total_currency.setText(total_currency_value + " " + (String) cbx_to.getValue());
 
 
         lb_single_currency.setText("1 "+(String) cbx_from.getValue()+" ="+String.format("%,.6f", currencyRate+ (String) cbx_to.getValue()));
+
+        pg_indicator.setVisible(true);
+        pg_indicator.setStyle("-fx-progress-color: #FFFFFF");
+
     }
 
     @FXML
     void btn_start_quiz_click(MouseEvent event) {
         grid_main_page.setVisible(false);
         grid_questions_page.setVisible(true);
+        grid_questions.setVisible(true);
+        grid_bitcoin_result.setVisible(false);
+        grid_ethereum_result.setVisible(false);
+        grid_litecoin_result.setVisible(false);
+        grid_cardano_result.setVisible(false);
         resetQuiz();
         System.out.println(lb_amount.getFont());
         System.out.println(lb_amount.getBackground());
+        pb_quiz.setStyle("-fx-accent: #000924"); //Set color ProgressBar
     }
 
     public void nextQuestion() {
         reset_answer_btn_color();
-        if(currentQuestionNumber == questions.size()){
+        if(currentQuestionNumber == questions.size()) {
             grid_questions.setVisible(false);
-            grid_questions_result.setVisible(true);
+            showResultPage();
             return;
         }
-        pb_quiz.setProgress((double)(1/questions.size())* currentQuestionNumber);
+        //Progressbar
+        double progress = (double) currentQuestionNumber / questions.size();
+        pb_quiz.setProgress(progress);
+
+
         reset_answer_btn_color();
         questionChecker();
         String currentQuestion = questions.get(currentQuestionNumber++);
@@ -119,21 +131,88 @@ public class HelloController {
 
     public void questionChecker() {
         if(btn_first_answer.getStyle().contains("#000924")){
-            pointForEuro++;
+            totalPoints += 4;
         } else if (btn_second_answer.getStyle().contains("#000924")){
-            pointForDollar++;
+            totalPoints += 3;
         } else if (btn_third_answer.getStyle().contains("#000924")){
-            pointForBitcoin++;
+            totalPoints += 2;
         } else if (btn_fourth_answer.getStyle().contains("#000924")){
-            pointForDogecoin++;
+            totalPoints += 1;
         }
     }
+
+    public void showResultPage() {
+        totalPoints = pointForBitcoin + pointForEthereum + pointForCardano + pointForLitecoin;
+
+        if(totalPoints >= 1 && totalPoints <= 8) {
+            showLitecoinResult();
+        } else if (totalPoints >= 9 && totalPoints <= 16) {
+            showCardanoResult();
+        } else if (totalPoints >= 17 && totalPoints <= 24) {
+            showEthereumResult();
+        } else if(totalPoints >= 25 && totalPoints <= 32) {
+            showBitcoinResult();
+        }
+    }
+
+    private void showBitcoinResult() {
+        grid_main_page.setVisible(false);
+        grid_questions.setVisible(false);
+
+        grid_bitcoin_result.setVisible(true);
+
+        grid_ethereum_result.setVisible(false);
+        grid_litecoin_result.setVisible(false);
+        grid_cardano_result.setVisible(false);
+
+    }
+
+    private void showEthereumResult() {
+        grid_main_page.setVisible(false);
+        grid_questions.setVisible(false);
+
+        //show result
+        grid_ethereum_result.setVisible(true);
+
+        //other results
+        grid_bitcoin_result.setVisible(false);
+        grid_litecoin_result.setVisible(false);
+        grid_cardano_result.setVisible(false);
+    }
+
+    private void showLitecoinResult() {
+        grid_main_page.setVisible(false);
+        grid_questions.setVisible(false);
+
+        //show result
+        grid_litecoin_result.setVisible(true);
+
+        //other results
+        grid_bitcoin_result.setVisible(false);
+        grid_ethereum_result.setVisible(false);
+        grid_cardano_result.setVisible(false);
+    }
+
+    private void showCardanoResult() {
+        grid_main_page.setVisible(false);
+        grid_questions.setVisible(false);
+
+        //show result
+        grid_cardano_result.setVisible(true);
+
+        //other results
+        grid_bitcoin_result.setVisible(false);
+        grid_ethereum_result.setVisible(false);
+        grid_litecoin_result.setVisible(false);
+    }
+
 
     @FXML
     void btn_second_answer_click(MouseEvent event) {
         if(btn_second_answer.getStyle().contains("#e9e9e9")){
             reset_answer_btn_color();
             btn_second_answer.setStyle("-fx-background-color: #000924; -fx-text-fill: #fff; -fx-font-bold: true; -fx-font-size: 16px; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #000924; -fx-border-width: 2px;");
+            questionChecker();
         }
         else{ reset_answer_btn_color();}
     }
@@ -142,6 +221,7 @@ public class HelloController {
         if(btn_third_answer.getStyle().contains("#e9e9e9")){
             reset_answer_btn_color();
             btn_third_answer.setStyle("-fx-background-color: #000924; -fx-text-fill: #fff; -fx-font-bold: true; -fx-font-size: 16px; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #000924; -fx-border-width: 2px;");
+            questionChecker();
         }
         else{ reset_answer_btn_color();}
     }
@@ -150,14 +230,17 @@ public class HelloController {
         if(btn_fourth_answer.getStyle().contains("#e9e9e9")){
             reset_answer_btn_color();
             btn_fourth_answer.setStyle("-fx-background-color: #000924; -fx-text-fill: #fff; -fx-font-bold: true; -fx-font-size: 16px; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #000924; -fx-border-width: 2px;");
+            questionChecker();
         }
         else{ reset_answer_btn_color();}
     }
     @FXML
     void btn_first_answer_click(MouseEvent event) {
+        System.out.println("button clicked");
         if(btn_first_answer.getStyle().contains("#e9e9e9")){
             reset_answer_btn_color();
             btn_first_answer.setStyle("-fx-background-color: #000924; -fx-text-fill: #fff; -fx-font-bold: true; -fx-font-size: 16px; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #000924; -fx-border-width: 2px;");
+            questionChecker();
         }
         else{ reset_answer_btn_color();}
     }
@@ -169,12 +252,15 @@ public class HelloController {
         btn_fourth_answer.setStyle("-fx-background-color: #e9e9e9; -fx-text-fill: #444951; -fx-font-bold: true; -fx-font-size: 16px;-fx-border-radius: 10px; -fx-background-radius: 10px;");
     }
     public void resetQuiz() {
-        pointForEuro = 0;
-        pointForDollar = 0;
-        pointForBitcoin = 0;
-        pointForDogecoin = 0;
+        totalPoints = 0;
+        pointForBitcoin= 0;
+        pointForEthereum = 0;
+        pointForLitecoin = 0;
+        pointForCardano = 0;
         currentQuestionNumber = 1;
         reset_answer_btn_color();
+        pb_quiz.setProgress(0);
+
     }
     public void goBackMainPage() {
         grid_main_page.setVisible(true);
@@ -182,22 +268,21 @@ public class HelloController {
     }
 
     public void lightMode() {
-        grid_upper_background.setStyle("-fx-background-color: #9e9e9e");
-        grid_under_background.setStyle("-fx-background-color: #9e9e9e");
+        grid_upper_background.setStyle("-fx-background-color: #76A5AF");
+        grid_under_background.setStyle("-fx-background-color: #76A5AF");
         lb_quiz.setStyle("-fx-text-fill: #FFFFFF");
         btn_start_quiz.setStyle("-fx-background-color: #FFFFFF");
-        lb_quiz.setStyle("-fx-text-fill: #000000");
-        btn_convert.setStyle("-fx-background-color: #9e9e9e; -fx-text-fill: #000000");
+        btn_convert.setStyle("-fx-background-color: #76A5AF");
         btn_dark_mode.setVisible(true);
         btn_light_mode.setVisible(false);
 
         //Second page
-        grid2_upper_background.setStyle("-fx-background-color: #9e9e9e");
-        grid2_under_background.setStyle("-fx-background-color: #9e9e9e");
-        btn_next_question.setStyle("-fx-background-color: #9e9e9e; -fx-text-fill: #000000; -fx-background-radius: 30");
-        lb_go_home.setStyle("-fx-text-fill: #000000");
+        grid2_upper_background.setStyle("-fx-background-color: #76A5AF");
+        grid2_under_background.setStyle("-fx-background-color: #76A5AF");
+        btn_next_question.setStyle("-fx-background-color: #76A5AF; -fx-text-fill: #FFFFFF; -fx-background-radius: 30");
         btn_dark_mode2.setVisible(true);
         btn_light_mode2.setVisible(false);
+        pb_quiz.setStyle("-fx-accent: #76A5AF");
     }
 
     public void darkMode() {
@@ -216,8 +301,6 @@ public class HelloController {
         lb_go_home.setStyle("-fx-text-fill: #FFFFFF");
         btn_dark_mode2.setVisible(false);
         btn_light_mode2.setVisible(true);
-
-
     }
 
 
@@ -233,7 +316,13 @@ public class HelloController {
     @FXML
     private GridPane grid_questions_page;
     @FXML
-    private GridPane grid_questions_result;
+    private GridPane grid_bitcoin_result;
+    @FXML
+    private GridPane grid_ethereum_result;
+    @FXML
+    private GridPane grid_litecoin_result;
+    @FXML
+    private GridPane grid_cardano_result;
     @FXML
     private Button btn_first_answer;
     @FXML
@@ -266,6 +355,8 @@ public class HelloController {
     private GridPane grid2_under_background;
     @FXML
     private Button btn_next_question;
+    @FXML
+    private ProgressIndicator pg_indicator;
 
 
 

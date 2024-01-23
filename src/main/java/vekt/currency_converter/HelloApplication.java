@@ -18,14 +18,15 @@ public class HelloApplication extends Application {
         //Window settings
         stage.setScene(new Scene(root));
         stage.setTitle("Currency Converter");
+
         stage.setResizable(false);
         stage.setWidth(798);
         stage.setHeight(600);
 
 
         Image logo = new Image("vekt/currency_converter/KyrptoGraphic/vekt_icon.png");
-
         stage.getIcons().add(logo);
+
         stage.show();
     }
 

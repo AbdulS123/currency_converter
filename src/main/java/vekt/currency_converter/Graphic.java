@@ -8,7 +8,7 @@ public class Graphic extends HelloApplication {
 
     public static final Image BITCOIN = new Image("Bitcoin.png");
 
-    public static final Image CARDANO = new Image("Cardano.png");
+    public static final Image LITECOIN = new Image("Litecoin.png");
 
     public static final Image ETHEREUM = new Image("Ethereum.png");
 
