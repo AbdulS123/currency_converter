@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class HelloController {
+public class Controller {
 
     private int totalPoints;
 
@@ -112,9 +112,8 @@ public class HelloController {
 
         reset_answer_btn_color();
         questionChecker();
-        String currentQuestion = questions.get(currentQuestionNumber++);
-        lb_quiz_question_text.setText(currentQuestion);
-        lb_quiz_question_text.setText(String.valueOf(currentQuestionNumber) + ". " + currentQuestion);
+        String currentQuestion = questions.get(++currentQuestionNumber);
+        lb_quiz_question_text.setText(String.valueOf(currentQuestionNumber+1) + ". " + currentQuestion);
     }
 
 
@@ -239,12 +238,11 @@ public class HelloController {
     }
     public void resetQuiz() {
         totalPoints = 0;
-        currentQuestionNumber = 1;
+        currentQuestionNumber =0;
         reset_answer_btn_color();
         pb_quiz.setProgress(0);
         String currentQuestion = questions.get(currentQuestionNumber);
-        lb_quiz_question_text.setText(currentQuestion);
-        lb_quiz_question_text.setText(String.valueOf(currentQuestionNumber) + ". " + currentQuestion);
+        lb_quiz_question_text.setText(String.valueOf(currentQuestionNumber+1) + ". " + currentQuestion);
 
     }
     public void goBackMainPage() {
