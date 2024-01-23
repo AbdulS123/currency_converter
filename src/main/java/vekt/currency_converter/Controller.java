@@ -21,13 +21,13 @@ public class Controller {
 
     //list of the questions
     private final List<String> questions = List.of(
-            "I am a very organized person.",
-            "In unexpected problems I immediately look for solutions.",
-            "I often spend my free time with friends or outdoors in nature.",
-            "I adapt quickly to changes in my life.",
-            "I accept my mistakes and see them as learning opportunities.",
             "I am interested in finances.",
-            "I love traveling and discovering different cultures.",
+            "I am willing to take risks in my investments.",
+            "I plan to invest my money for a specific period before needing it.",
+            "I have a good understanding of cryptocurrencies.",
+            "I accept my mistakes and see them as learning opportunities.",
+            "I understand the fundamentals of financial markets.",
+            "I am technology-savvy.",
             "I set aside a certain amount of money monthly.");
 
     @FXML
