@@ -68,12 +68,15 @@ public class Controller {
         String extractedNumber = matcher.find() ? matcher.group(1) : "";
 
         return stringCleaner(extractedNumber);
-
     }
     public Double stringCleaner(String extractedNumber){
         String cleanedNumberString = extractedNumber.replace(",", "");
         return Double.parseDouble(cleanedNumberString);
     }
+
+
+
+
     @FXML
     void btn_convert_click(MouseEvent event) throws IOException {
         //if the amount field is empty return
@@ -86,6 +89,8 @@ public class Controller {
         String total_currency_value = String.format("%,.6f", Double.parseDouble(tf_amount.getText()) * currencyRate);
         lb_total_currency.setText(total_currency_value + " " + (String) cbx_to.getValue());
     }
+
+
 
     @FXML
     void btn_start_quiz_click(MouseEvent event) {
@@ -104,22 +109,16 @@ public class Controller {
 
     public void nextQuestion() {
         reset_answer_btn_color();
-        if(currentQuestionNumber == questions.size()) {
+        if(currentQuestionNumber == questions.size()-1) {
             grid_questions.setVisible(false);
             showResultPage();
             return;
         }
         //Progressbar
-        double progress = 0;
-        if(progress == 0){
-            progress = (double) (currentQuestionNumber+1) / questions.size();
+        double progress = (double) (currentQuestionNumber+1) / questions.size();
             
-        }
-        else{
-             progress = (double) currentQuestionNumber / questions.size();
 
-        }
-        
+
         pb_quiz.setProgress(progress);
 
 
