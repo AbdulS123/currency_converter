@@ -6,7 +6,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.Reflection?>
@@ -30,7 +29,7 @@
       <RowConstraints maxHeight="153.0" minHeight="10.0" prefHeight="152.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-      <GridPane fx:id="grid_main_page" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" visible="false" GridPane.columnSpan="2" GridPane.rowSpan="4">
+      <GridPane fx:id="grid_main_page" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" GridPane.columnSpan="2" GridPane.rowSpan="4">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="440.0" minWidth="10.0" prefWidth="401.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="448.0" minWidth="10.0" prefWidth="399.0" />
@@ -549,7 +548,7 @@
                       </items>
                     </ComboBox>
 
-                                <Label fx:id="lb_total_currency" maxWidth="1.7976931348623157E308" text="0.935794 EUROS" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                <Label fx:id="lb_total_currency" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3">
                       <font>
                         <Font name="System Bold" size="20.0" />
                       </font>
@@ -590,22 +589,11 @@
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
-                  <GridPane fx:id="grid_loading" visible="false">
-                    <columnConstraints>
-                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <ProgressIndicator fx:id="pg_indicator" progress="0.0" />
-                     </children>
-                  </GridPane>
               </children>
             </GridPane>
          </children>
       </GridPane>
-      <GridPane fx:id="grid_questions_page" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" GridPane.columnSpan="2" GridPane.rowSpan="4">
+      <GridPane fx:id="grid_questions_page" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" visible="false" GridPane.columnSpan="2" GridPane.rowSpan="4">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="440.0" minWidth="10.0" prefWidth="401.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="448.0" minWidth="10.0" prefWidth="399.0" />

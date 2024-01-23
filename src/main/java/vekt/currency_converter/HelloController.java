@@ -15,14 +15,10 @@ import java.util.regex.Pattern;
 
 public class HelloController {
 
-    private int pointForBitcoin;
-    private int pointForEthereum;
-    private int pointForCardano;
-    private int pointForLitecoin;
     private int totalPoints;
 
     private final List<String> questions = List.of(
-            "1. I am a very organized person.",
+            "I am a very organized person.",
             "In unexpected problems I immediately look for solutions.",
             "I often spend my free time with friends or outdoors in nature.",
             "I adapt quickly to changes in my life.",
@@ -85,17 +81,11 @@ public class HelloController {
         Double currencyRate = exchangeRateGetter((String) cbx_from.getValue(), (String) cbx_to.getValue());
         String total_currency_value = String.format("%,.6f", Double.parseDouble(tf_amount.getText()) * currencyRate);
         lb_total_currency.setText(total_currency_value + " " + (String) cbx_to.getValue());
-
-
-        lb_single_currency.setText("1 "+(String) cbx_from.getValue()+" ="+String.format("%,.6f", currencyRate+ (String) cbx_to.getValue()));
-
-        pg_indicator.setVisible(true);
-        pg_indicator.setStyle("-fx-progress-color: #FFFFFF");
-
     }
 
     @FXML
     void btn_start_quiz_click(MouseEvent event) {
+        resetQuiz();
         grid_main_page.setVisible(false);
         grid_questions_page.setVisible(true);
         grid_questions.setVisible(true);
@@ -103,7 +93,6 @@ public class HelloController {
         grid_ethereum_result.setVisible(false);
         grid_litecoin_result.setVisible(false);
         grid_cardano_result.setVisible(false);
-        resetQuiz();
         System.out.println(lb_amount.getFont());
         System.out.println(lb_amount.getBackground());
         pb_quiz.setStyle("-fx-accent: #000924"); //Set color ProgressBar
@@ -142,8 +131,6 @@ public class HelloController {
     }
 
     public void showResultPage() {
-        totalPoints = pointForBitcoin + pointForEthereum + pointForCardano + pointForLitecoin;
-
         if(totalPoints >= 1 && totalPoints <= 8) {
             showLitecoinResult();
         } else if (totalPoints >= 9 && totalPoints <= 16) {
@@ -236,7 +223,6 @@ public class HelloController {
     }
     @FXML
     void btn_first_answer_click(MouseEvent event) {
-        System.out.println("button clicked");
         if(btn_first_answer.getStyle().contains("#e9e9e9")){
             reset_answer_btn_color();
             btn_first_answer.setStyle("-fx-background-color: #000924; -fx-text-fill: #fff; -fx-font-bold: true; -fx-font-size: 16px; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #000924; -fx-border-width: 2px;");
@@ -253,13 +239,12 @@ public class HelloController {
     }
     public void resetQuiz() {
         totalPoints = 0;
-        pointForBitcoin= 0;
-        pointForEthereum = 0;
-        pointForLitecoin = 0;
-        pointForCardano = 0;
         currentQuestionNumber = 1;
         reset_answer_btn_color();
         pb_quiz.setProgress(0);
+        String currentQuestion = questions.get(currentQuestionNumber);
+        lb_quiz_question_text.setText(currentQuestion);
+        lb_quiz_question_text.setText(String.valueOf(currentQuestionNumber) + ". " + currentQuestion);
 
     }
     public void goBackMainPage() {
